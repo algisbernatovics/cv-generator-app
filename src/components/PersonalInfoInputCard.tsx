@@ -1,7 +1,23 @@
 import React from "react";
 import { Form, Input, Card } from "antd";
 
-const PersonalInformationCard = ({
+interface PersonalInformationCardProps {
+  name: string;
+  email: string;
+  website: string;
+  phoneNumber: string;
+  location: string;
+  objective: string;
+  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeObjective: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeWebsite: React.ChangeEventHandler<HTMLInputElement>;
+  onChangePhoneNumber: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeLocation: React.ChangeEventHandler<HTMLInputElement>;
+  style?: React.CSSProperties;
+}
+
+const PersonalInformationCard: React.FC<PersonalInformationCardProps> = ({
   name,
   email,
   website,
@@ -14,11 +30,12 @@ const PersonalInformationCard = ({
   onChangeWebsite,
   onChangePhoneNumber,
   onChangeLocation,
+  style,
 }) => {
   return (
     <Card
       title="Personal Information"
-      style={{ background: "#f0f0f0", padding: "10px", margin: "10px" }}>
+      style={{ background: "#f0f0f0", padding: "10px", margin: "10px", ...style }}>
       <Form layout="vertical">
         <Form.Item label="Name">
           <Input value={name} onChange={onChangeName} />

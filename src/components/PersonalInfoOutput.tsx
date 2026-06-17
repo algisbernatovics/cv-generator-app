@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  UserOutlined,
-  MailOutlined,
-  GlobalOutlined,
-  PhoneOutlined,
-} from "@ant-design/icons";
+import { MailOutlined, GlobalOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Row, Col, Card } from "antd";
 
 const CVPersonalInf: React.FC<{
@@ -20,7 +15,7 @@ const CVPersonalInf: React.FC<{
   };
 
   const blueLineStyle: React.CSSProperties = {
-    borderBottom: "4px solid #337AFF", // Use a lighter blue color for the line at the top
+    borderBottom: "4px solid #337AFF",
     marginBottom: "10px",
   };
 
@@ -28,24 +23,24 @@ const CVPersonalInf: React.FC<{
     fontSize: "24px",
     fontFamily: "'Lato', sans-serif",
     margin: 0,
-    color: "#4e94c1", // Use light blue color for the name
+    color: "#4e94c1",
   };
 
   const infoContainerStyle: React.CSSProperties = {
     display: "flex",
-    justifyContent: "center", // Center the content horizontally
-    alignItems: "center", // Center the content vertically
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: "10px",
   };
 
   const infoTextStyle: React.CSSProperties = {
     margin: 0,
-    marginLeft: "5px", // Add some left margin to the text to separate it from the icon
+    marginLeft: "5px",
   };
 
   return (
     <div style={containerStyle}>
-      <div style={blueLineStyle}></div> {/* Blue line at the top */}
+      <div style={blueLineStyle}></div>
       <p style={nameStyle}>{name}</p>
       <p>{objective}</p>
       <Row gutter={16} style={infoContainerStyle}>
@@ -70,7 +65,16 @@ const CVPersonalInf: React.FC<{
   );
 };
 
-const PersonalInfoOutputCard = ({
+interface PersonalInfoOutputCardProps {
+  name: string;
+  email: string;
+  website: string;
+  phoneNumber: string;
+  location: string;
+  objective: string;
+}
+
+const PersonalInfoOutputCard: React.FC<PersonalInfoOutputCardProps> = ({
   name,
   email,
   website,

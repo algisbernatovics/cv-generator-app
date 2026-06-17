@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Input, DatePicker, Button, Form, Row, Col } from "antd";
-import moment from "moment";
+import dayjs, { Dayjs } from "dayjs";
 
 interface Experience {
   jobTitle: string;
@@ -12,13 +12,11 @@ interface Experience {
 
 interface WorkExperienceInputCardProps {
   onAddExperience: (experience: Experience) => void;
-  onSaveExperience: (index: number | null, experience: Experience) => void; // Update the onSaveExperience prop
+  onSaveExperience: (index: number, experience: Experience) => void;
   editExperience: Experience | null;
   editExperienceIndex: number | null;
-  setEditExperience: (
-    experience: Experience | null,
-    index: number | null
-  ) => void; // Update the setEditExperience prop
+  setEditExperience: React.Dispatch<React.SetStateAction<Experience | null>>;
+  style?: React.CSSProperties;
 }
 
 const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
@@ -27,11 +25,12 @@ const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
   editExperience,
   editExperienceIndex,
   setEditExperience,
+  style,
 }) => {
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
-  const [startDate, setStartDate] = useState<any>(null);
-  const [endDate, setEndDate] = useState<any>(null);
+  const [startDate, setStartDate] = useState<Dayjs | null>(null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [description, setDescription] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -40,8 +39,8 @@ const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
       setIsEditing(true);
       setJobTitle(editExperience.jobTitle);
       setCompany(editExperience.company);
-      setStartDate(moment(editExperience.startDate, "YYYY-MM-DD")); // Convert to moment object
-      setEndDate(moment(editExperience.endDate, "YYYY-MM-DD")); // Convert to moment object
+      setStartDate(dayjs(editExperience.startDate, "YYYY-MM-DD"));
+      setEndDate(dayjs(editExperience.endDate, "YYYY-MM-DD"));
       setDescription(editExperience.description);
     } else {
       setIsEditing(false);
@@ -72,7 +71,7 @@ const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
   };
 
   const handleSaveExperience = () => {
-    if (editExperience && editExperienceIndex !== null) {
+    if (editExperience && editExperienceIndex !== null && startDate && endDate) {
       const updatedExperience: Experience = {
         ...editExperience,
         jobTitle,
@@ -82,14 +81,14 @@ const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
         description,
       };
       onSaveExperience(editExperienceIndex, updatedExperience);
-      setEditExperience(null, null);
+      setEditExperience(null);
     }
   };
 
   return (
     <Card
       title={isEditing ? "Edit Work Experience" : "Add Work Experience"}
-      style={{ background: "#f0f0f0", padding: "10px", margin: "10px" }}>
+      style={{ background: "#f0f0f0", padding: "10px", margin: "10px", ...style }}>
       <Form layout="vertical">
         <Form.Item label="Company">
           <Input
@@ -111,7 +110,7 @@ const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
               <DatePicker
                 placeholder="Start Date"
                 value={startDate}
-                onChange={(date) => setStartDate(date)} // Date parameter is already a moment object
+                onChange={(date) => setStartDate(date)}
               />
             </Form.Item>
           </Col>
@@ -120,7 +119,7 @@ const WorkExperienceInputCard: React.FC<WorkExperienceInputCardProps> = ({
               <DatePicker
                 placeholder="End Date"
                 value={endDate}
-                onChange={(date) => setEndDate(date)} // Date parameter is already a moment object
+                onChange={(date) => setEndDate(date)}
               />
             </Form.Item>
           </Col>

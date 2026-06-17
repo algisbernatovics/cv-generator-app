@@ -13,18 +13,15 @@ const HomePage: React.FC = () => {
         <h1 style={{ margin: 0 }}>CV Generator</h1>
       </Header>
       <Content style={{ padding: "40px 0" }}>
-        {/* Add padding to create space */}
         <Row
           justify="center"
-          align="center"
+          align="middle"
           style={{
             minHeight: "calc(100vh - 64px)",
             display: "flex",
             justifyContent: "center",
           }}>
-          {/* Content is centered within the div */}
-          <Col xs={48} md={24} style={{ width: "100%", padding: "0 20px" }}>
-            {/* Set the width and add left-right padding */}
+          <Col xs={24} md={22} lg={18} style={{ width: "100%", padding: "0 20px" }}>
             <CVGenerator />
           </Col>
         </Row>
