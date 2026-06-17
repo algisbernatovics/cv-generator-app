@@ -2,6 +2,8 @@
 
 A Next.js and React CV builder that lets users enter personal information and work experience, then preview the result live.
 
+Live demo: [cv-generator-app-dun.vercel.app](https://cv-generator-app-dun.vercel.app)
+
 ## Overview
 
 This project focuses on client-side form state, component composition, and live preview behavior. It is a good example of CRUD-like interactions without a backend.
