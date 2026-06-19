@@ -1,0 +1,102 @@
+/**
+ * Design tokens — single source of truth for colors, spacing, and typography.
+ * All component CSS must reference semantic tokens, never raw hex in components.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ── Primitives ── */
+  --primitive-white: #ffffff;
+  --primitive-slate-50: #f8fafc;
+  --primitive-slate-100: #f1f5f9;
+  --primitive-slate-200: #e2e8f0;
+  --primitive-slate-300: #cbd5e1;
+  --primitive-slate-500: #64748b;
+  --primitive-slate-700: #334155;
+  --primitive-slate-900: #0f172a;
+  --primitive-blue-600: #2563eb;
+  --primitive-blue-700: #1d4ed8;
+  --primitive-blue-50: #eff6ff;
+  --primitive-red-600: #dc2626;
+  --primitive-red-100: #fee2e2;
+
+  /* ── Semantic colors ── */
+  --color-bg: var(--primitive-slate-100);
+  --color-bg-subtle: var(--primitive-slate-50);
+  --color-bg-preview: var(--primitive-blue-50);
+  --color-surface: var(--primitive-white);
+  --color-surface-muted: var(--primitive-slate-50);
+  --color-border: var(--primitive-slate-200);
+  --color-border-strong: var(--primitive-slate-300);
+  --color-text: var(--primitive-slate-900);
+  --color-text-muted: var(--primitive-slate-500);
+  --color-text-subtle: var(--primitive-slate-700);
+  --color-text-inverse: var(--primitive-white);
+  --color-accent: var(--primitive-blue-700);
+  --color-accent-hover: var(--primitive-blue-600);
+  --color-accent-soft: var(--primitive-blue-50);
+  --color-danger: var(--primitive-red-600);
+  --color-danger-border: var(--primitive-red-100);
+  --color-focus: rgba(37, 99, 235, 0.35);
+
+  /* ── Component tokens ── */
+  --header-bg: color-mix(in srgb, var(--color-bg) 92%, transparent);
+  --nav-bg: color-mix(in srgb, var(--color-surface) 96%, transparent);
+  --nav-height: 4.5rem;
+
+  --btn-height: 2.75rem;
+  --btn-height-sm: 2.35rem;
+  --btn-radius: 0.75rem;
+  --btn-primary-bg: var(--color-accent);
+  --btn-primary-fg: var(--color-text-inverse);
+  --btn-primary-bg-hover: var(--color-accent-hover);
+  --btn-secondary-bg: var(--color-surface);
+  --btn-secondary-fg: var(--color-text);
+  --btn-secondary-border: var(--color-border);
+  --btn-ghost-bg: var(--color-surface);
+  --btn-ghost-fg: var(--color-text-subtle);
+  --btn-ghost-border: var(--color-border);
+  --btn-danger-bg: var(--color-surface);
+  --btn-danger-fg: var(--color-danger);
+  --btn-danger-border: var(--color-danger-border);
+  --btn-disabled-opacity: 0.5;
+
+  --input-bg: var(--color-surface);
+  --input-fg: var(--color-text);
+  --input-border: var(--color-border);
+  --input-placeholder: var(--color-text-muted);
+  --input-disabled-bg: var(--color-bg-subtle);
+  --input-disabled-fg: var(--color-text-muted);
+
+  --panel-bg: var(--color-surface);
+  --panel-border: var(--color-border);
+  --panel-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+
+  --resume-bg: var(--color-surface);
+  --resume-fg: var(--color-text);
+  --resume-heading: var(--color-accent);
+  --resume-muted: var(--color-text-muted);
+  --resume-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+  --nav-tab-bg: var(--color-surface);
+  --nav-tab-fg: var(--color-text);
+  --nav-tab-border: var(--color-border);
+  --nav-tab-active-bg: var(--color-text);
+  --nav-tab-active-fg: var(--color-text-inverse);
+  --nav-tab-accent-bg: var(--color-accent);
+  --nav-tab-accent-fg: var(--color-text-inverse);
+
+  /* ── Typography ── */
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-input: 16px;
+  --font-size-body: 0.9375rem;
+  --font-size-sm: 0.875rem;
+  --font-size-xs: 0.8125rem;
+  --font-size-label: 0.85rem;
+
+  /* ── Radius & spacing ── */
+  --radius-panel: 1rem;
+  --radius-control: 0.75rem;
+  --space-page: 1rem;
+}

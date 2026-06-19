@@ -154,7 +154,7 @@ export function ResumeApp() {
             <p className="app-kicker">Resume builder</p>
             <h1 className="app-title">Build your CV</h1>
           </div>
-          <button type="button" className="btn btn-ghost hidden sm:inline-flex" onClick={resetAll}>
+          <button type="button" className="btn btn-ghost u-hidden u-sm-inline-flex" onClick={resetAll}>
             Reset
           </button>
         </div>
@@ -248,7 +248,7 @@ export function ResumeApp() {
                         <p className="job-item-dates">{formatJobDates(job)}</p>
                       </div>
                       <div className="job-item-actions">
-                        <button type="button" className="btn btn-small" onClick={() => startEditJob(job)}>
+                        <button type="button" className="btn btn-small btn-secondary" onClick={() => startEditJob(job)}>
                           Edit
                         </button>
                         <button
@@ -346,7 +346,7 @@ export function ResumeApp() {
               </div>
             </section>
 
-            <button type="button" className="btn btn-secondary w-full sm:hidden" onClick={() => setTab("preview")}>
+            <button type="button" className="btn btn-secondary btn-block u-sm-hidden" onClick={() => setTab("preview")}>
               Open preview
             </button>
           </div>
