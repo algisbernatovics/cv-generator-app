@@ -1,8 +1,12 @@
 import React from "react";
-import { MailOutlined, GlobalOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Row, Col, Card } from "antd";
+import {
+  EnvironmentOutlined,
+  GlobalOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 
-const CVPersonalInf: React.FC<{
+const CVPersonalInfo: React.FC<{
   name: string;
   email: string;
   website: string;
@@ -10,57 +14,46 @@ const CVPersonalInf: React.FC<{
   location: string;
   objective: string;
 }> = ({ name, email, website, phoneNumber, location, objective }) => {
-  const containerStyle: React.CSSProperties = {
-    marginBottom: "20px",
-  };
+  const displayName = name.trim() || "Your Name";
+  const displayObjective =
+    objective.trim() || "Your professional summary will appear here.";
 
-  const blueLineStyle: React.CSSProperties = {
-    borderBottom: "4px solid #337AFF",
-    marginBottom: "10px",
-  };
-
-  const nameStyle: React.CSSProperties = {
-    fontSize: "24px",
-    fontFamily: "'Lato', sans-serif",
-    margin: 0,
-    color: "#4e94c1",
-  };
-
-  const infoContainerStyle: React.CSSProperties = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "10px",
-  };
-
-  const infoTextStyle: React.CSSProperties = {
-    margin: 0,
-    marginLeft: "5px",
-  };
+  const contactItems = [
+    { icon: <MailOutlined aria-hidden />, value: email, label: "Email" },
+    { icon: <PhoneOutlined aria-hidden />, value: phoneNumber, label: "Phone" },
+    {
+      icon: <EnvironmentOutlined aria-hidden />,
+      value: location,
+      label: "Location",
+    },
+    {
+      icon: <GlobalOutlined aria-hidden />,
+      value: website,
+      label: "Website",
+    },
+  ].filter((item) => item.value.trim());
 
   return (
-    <div style={containerStyle}>
-      <div style={blueLineStyle}></div>
-      <p style={nameStyle}>{name}</p>
-      <p>{objective}</p>
-      <Row gutter={16} style={infoContainerStyle}>
-        <Col>
-          <p style={infoTextStyle}>
-            <MailOutlined /> {email}
-          </p>
-        </Col>
-        <Col>
-          <p style={infoTextStyle}>
-            <PhoneOutlined /> {phoneNumber}
-          </p>
-        </Col>
-        <Col>
-          <p style={infoTextStyle}>
-            <GlobalOutlined /> {location}
-          </p>
-        </Col>
-      </Row>
-      <p>Website: {website}</p>
+    <div className="px-3 pb-2 pt-1">
+      <div className="mb-3 border-b-4 border-[#337aff]" />
+      <p className="mb-2 text-2xl font-semibold text-[#4e94c1]">{displayName}</p>
+      <p className="mb-4 whitespace-pre-wrap text-slate-700">{displayObjective}</p>
+
+      {contactItems.length > 0 ? (
+        <ul className="mb-2 grid gap-2 sm:grid-cols-2">
+          {contactItems.map((item) => (
+            <li key={item.label} className="flex items-start gap-2 text-sm text-slate-700">
+              <span className="mt-0.5 text-[#4e94c1]">{item.icon}</span>
+              <span>
+                <span className="sr-only">{item.label}: </span>
+                {item.value}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm text-slate-500">Add contact details to preview them here.</p>
+      )}
     </div>
   );
 };
@@ -74,30 +67,8 @@ interface PersonalInfoOutputCardProps {
   objective: string;
 }
 
-const PersonalInfoOutputCard: React.FC<PersonalInfoOutputCardProps> = ({
-  name,
-  email,
-  website,
-  phoneNumber,
-  location,
-  objective,
-}) => {
-  return (
-    <div
-      style={{
-        padding: "10px",
-        margin: "10px",
-      }}>
-      <CVPersonalInf
-        name={name}
-        email={email}
-        website={website}
-        phoneNumber={phoneNumber}
-        location={location}
-        objective={objective}
-      />
-    </div>
-  );
+const PersonalInfoOutputCard: React.FC<PersonalInfoOutputCardProps> = (props) => {
+  return <CVPersonalInfo {...props} />;
 };
 
 export default PersonalInfoOutputCard;

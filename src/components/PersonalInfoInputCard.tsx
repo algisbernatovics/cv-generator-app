@@ -9,12 +9,11 @@ interface PersonalInformationCardProps {
   location: string;
   objective: string;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onChangeObjective: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeObjective: React.ChangeEventHandler<HTMLTextAreaElement>;
   onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
   onChangeWebsite: React.ChangeEventHandler<HTMLInputElement>;
   onChangePhoneNumber: React.ChangeEventHandler<HTMLInputElement>;
   onChangeLocation: React.ChangeEventHandler<HTMLInputElement>;
-  style?: React.CSSProperties;
 }
 
 const PersonalInformationCard: React.FC<PersonalInformationCardProps> = ({
@@ -30,40 +29,52 @@ const PersonalInformationCard: React.FC<PersonalInformationCardProps> = ({
   onChangeWebsite,
   onChangePhoneNumber,
   onChangeLocation,
-  style,
 }) => {
   return (
-    <Card
-      title="Personal Information"
-      style={{ background: "#f0f0f0", padding: "10px", margin: "10px", ...style }}>
+    <Card title="Personal Information" className="shadow-sm">
       <Form layout="vertical">
         <Form.Item label="Name">
-          <Input value={name} onChange={onChangeName} />
+          <Input value={name} onChange={onChangeName} placeholder="Jane Doe" />
         </Form.Item>
         <Form.Item label="Objective">
-          <Input value={objective} onChange={onChangeObjective} />
+          <Input.TextArea
+            rows={3}
+            value={objective}
+            onChange={onChangeObjective}
+            placeholder="Short summary of your goals and strengths"
+          />
         </Form.Item>
-        <div style={{ display: "flex" }}>
-          <div style={{ marginRight: "8px" }}>
-            <Form.Item label="Email">
-              <Input type="email" value={email} onChange={onChangeEmail} />
-            </Form.Item>
-            <Form.Item label="Website">
-              <Input value={website} onChange={onChangeWebsite} />
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item label="Phone">
-              <Input
-                type="tel"
-                value={phoneNumber}
-                onChange={onChangePhoneNumber}
-              />
-            </Form.Item>
-            <Form.Item label="Location">
-              <Input value={location} onChange={onChangeLocation} />
-            </Form.Item>
-          </div>
+        <div className="grid gap-0 sm:grid-cols-2 sm:gap-x-4">
+          <Form.Item label="Email">
+            <Input
+              type="email"
+              value={email}
+              onChange={onChangeEmail}
+              placeholder="jane@example.com"
+            />
+          </Form.Item>
+          <Form.Item label="Phone">
+            <Input
+              type="tel"
+              value={phoneNumber}
+              onChange={onChangePhoneNumber}
+              placeholder="+1 555 0100"
+            />
+          </Form.Item>
+          <Form.Item label="Website">
+            <Input
+              value={website}
+              onChange={onChangeWebsite}
+              placeholder="https://example.com"
+            />
+          </Form.Item>
+          <Form.Item label="Location">
+            <Input
+              value={location}
+              onChange={onChangeLocation}
+              placeholder="City, Country"
+            />
+          </Form.Item>
         </div>
       </Form>
     </Card>
