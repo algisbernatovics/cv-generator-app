@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PersonalInfoInputCard from "./PersonalInfoInputCard";
 import PersonalInfoOutputCard from "./PersonalInfoOutput";
 import WorkExperienceInputCard from "./WorkExperienceInputCard";
@@ -36,6 +36,16 @@ const defaultState: CVFormState = {
   experiences: [],
 };
 
+const formFields: (keyof CVFormState)[] = [
+  "name",
+  "email",
+  "phoneNumber",
+  "objective",
+  "website",
+  "location",
+  "experiences",
+];
+
 function readStoredState(): CVFormState {
   if (typeof window === "undefined") {
     return defaultState;
@@ -67,16 +77,27 @@ const CVGenerator = () => {
     null
   );
   const [hydrated, setHydrated] = useState(false);
+  const editedFields = useRef<Partial<Record<keyof CVFormState, true>>>({});
+
+  const markFieldEdited = (field: keyof CVFormState) => {
+    editedFields.current[field] = true;
+  };
 
   useEffect(() => {
     const stored = readStoredState();
-    setName(stored.name);
-    setEmail(stored.email);
-    setPhoneNumber(stored.phoneNumber);
-    setObjective(stored.objective);
-    setWebsite(stored.website);
-    setLocation(stored.location);
-    setExperiences(stored.experiences);
+    const edited = editedFields.current;
+
+    setName((current) => (edited.name ? current : stored.name));
+    setEmail((current) => (edited.email ? current : stored.email));
+    setPhoneNumber((current) =>
+      edited.phoneNumber ? current : stored.phoneNumber
+    );
+    setObjective((current) => (edited.objective ? current : stored.objective));
+    setWebsite((current) => (edited.website ? current : stored.website));
+    setLocation((current) => (edited.location ? current : stored.location));
+    setExperiences((current) =>
+      edited.experiences ? current : stored.experiences
+    );
     setHydrated(true);
   }, []);
 
@@ -108,10 +129,12 @@ const CVGenerator = () => {
   ]);
 
   const handleAddExperience = (experience: Experience) => {
+    markFieldEdited("experiences");
     setExperiences((current) => [...current, experience]);
   };
 
   const handleSaveExperience = (index: number, experience: Experience) => {
+    markFieldEdited("experiences");
     setExperiences((current) => {
       const updated = [...current];
       updated[index] = experience;
@@ -127,10 +150,12 @@ const CVGenerator = () => {
   };
 
   const handleDeleteExperience = (index: number) => {
+    markFieldEdited("experiences");
     setExperiences((current) => current.filter((_, i) => i !== index));
   };
 
   const handleClearForm = () => {
+    formFields.forEach(markFieldEdited);
     setName("");
     setEmail("");
     setPhoneNumber("");
@@ -164,12 +189,30 @@ const CVGenerator = () => {
             phoneNumber={phoneNumber}
             location={location}
             objective={objective}
-            onChangeName={(e) => setName(e.target.value)}
-            onChangeObjective={(e) => setObjective(e.target.value)}
-            onChangeEmail={(e) => setEmail(e.target.value)}
-            onChangeWebsite={(e) => setWebsite(e.target.value)}
-            onChangePhoneNumber={(e) => setPhoneNumber(e.target.value)}
-            onChangeLocation={(e) => setLocation(e.target.value)}
+            onChangeName={(e) => {
+              markFieldEdited("name");
+              setName(e.target.value);
+            }}
+            onChangeObjective={(e) => {
+              markFieldEdited("objective");
+              setObjective(e.target.value);
+            }}
+            onChangeEmail={(e) => {
+              markFieldEdited("email");
+              setEmail(e.target.value);
+            }}
+            onChangeWebsite={(e) => {
+              markFieldEdited("website");
+              setWebsite(e.target.value);
+            }}
+            onChangePhoneNumber={(e) => {
+              markFieldEdited("phoneNumber");
+              setPhoneNumber(e.target.value);
+            }}
+            onChangeLocation={(e) => {
+              markFieldEdited("location");
+              setLocation(e.target.value);
+            }}
           />
 
           <WorkExperienceInputCard
