@@ -1,33 +1,20 @@
 "use client";
-import React from "react";
-import { Layout, Row, Col } from "antd";
+
 import CVGenerator from "../components/CVGenerator";
-import "./page.css"; // Corrected the import statement for the CSS file
-const { Header, Content } = Layout;
+import "./page.css";
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
   return (
-    <Layout style={{ minHeight: "100vh", padding: 0 }}>
-      {/* Set padding to 0 */}
-      <Header style={{ color: "#fff", textAlign: "center" }}>
-        <h1 style={{ margin: 0 }}>CV Generator</h1>
-      </Header>
-      <Content style={{ padding: "40px 0" }}>
-        <Row
-          justify="center"
-          align="middle"
-          style={{
-            minHeight: "calc(100vh - 64px)",
-            display: "flex",
-            justifyContent: "center",
-          }}>
-          <Col xs={24} md={22} lg={18} style={{ width: "100%", padding: "0 20px" }}>
-            <CVGenerator />
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+    <div className="cv-page">
+      <header className="cv-header">
+        <h1>CV Generator</h1>
+        <p style={{ margin: "0.35rem 0 0", opacity: 0.85, fontSize: "0.95rem" }}>
+          Fill in your details and preview your CV instantly.
+        </p>
+      </header>
+      <main className="cv-main">
+        <CVGenerator />
+      </main>
+    </div>
   );
-};
-
-export default HomePage;
+}

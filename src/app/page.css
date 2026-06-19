@@ -1,3 +1,29 @@
-body {
-  overflow: hidden;
+.cv-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.cv-header {
+  background: #1f2937;
+  color: #fff;
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
+
+.cv-header h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 600;
+}
+
+.cv-main {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .cv-main {
+    padding: 1.5rem;
+  }
 }
