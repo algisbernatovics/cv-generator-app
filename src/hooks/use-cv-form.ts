@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import {
   createExperienceId,
   emptyCV,
@@ -54,9 +54,13 @@ function cvReducer(state: CVData, action: CVAction): CVData {
 export function useCVForm() {
   const [data, dispatch] = useReducer(cvReducer, emptyCV);
   const [hydrated, setHydrated] = useState(false);
+  const editedBeforeHydrate = useRef(false);
 
   useEffect(() => {
-    dispatch({ type: "hydrate", data: readCVFromStorage() });
+    if (!editedBeforeHydrate.current) {
+      dispatch({ type: "hydrate", data: readCVFromStorage() });
+    }
+
     setHydrated(true);
   }, []);
 
@@ -68,19 +72,26 @@ export function useCVForm() {
     writeCVToStorage(data);
   }, [data, hydrated]);
 
+  function markEdited() {
+    editedBeforeHydrate.current = true;
+  }
+
   return {
     data,
     hydrated,
     updateProfile(field: keyof CVProfile, value: string) {
+      markEdited();
       dispatch({ type: "update-profile", field, value });
     },
     addExperience(experience: Omit<CVExperience, "id">) {
+      markEdited();
       dispatch({
         type: "add-experience",
         experience: { ...experience, id: createExperienceId() },
       });
     },
     updateExperience(id: string, experience: Omit<CVExperience, "id">) {
+      markEdited();
       dispatch({
         type: "update-experience",
         id,
@@ -88,9 +99,11 @@ export function useCVForm() {
       });
     },
     deleteExperience(id: string) {
+      markEdited();
       dispatch({ type: "delete-experience", id });
     },
     reset() {
+      editedBeforeHydrate.current = false;
       dispatch({ type: "reset" });
       clearCVStorage();
     },
