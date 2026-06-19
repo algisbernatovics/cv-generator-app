@@ -1,15 +1,23 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Providers from "./providers";
+import { DM_Sans, Source_Serif_4 } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const sans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["400", "500", "700"],
+});
+
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "600", "700"],
+});
 
 export const metadata: Metadata = {
-  title: "CV Generator",
-  description:
-    "Build and preview a simple CV with editable personal details and work experience.",
-  viewport: "width=device-width, initial-scale=1",
+  title: "CV Builder",
+  description: "Build a clean, printable CV in your browser. Works on phone and desktop.",
+  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
 };
 
 export default function RootLayout({
@@ -19,9 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
+      <body className={`${sans.variable} ${serif.variable}`}>{children}</body>
     </html>
   );
 }
