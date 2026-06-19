@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
-
 export default function Error({
   reset,
 }: {
@@ -9,12 +7,16 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-canvas px-4 text-center">
-      <h1 className="text-2xl font-semibold text-ink">Something went wrong</h1>
-      <p className="max-w-md text-muted">
-        The CV builder could not load. Your saved data should still be in this browser.
-      </p>
-      <Button onClick={reset}>Try again</Button>
+    <div className="app-shell">
+      <main className="app-main">
+        <section className="panel">
+          <h2 className="panel-title">Something went wrong</h2>
+          <p className="panel-note">Your saved resume should still be in this browser.</p>
+          <button type="button" className="btn btn-primary" onClick={reset}>
+            Try again
+          </button>
+        </section>
+      </main>
     </div>
   );
 }

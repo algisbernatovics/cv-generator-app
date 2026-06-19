@@ -1,5 +1,5 @@
-import { CVBuilder } from "@/components/cv/CVBuilder";
+import { ResumeApp } from "@/components/ResumeApp";
 
 export default function HomePage() {
-  return <CVBuilder />;
+  return <ResumeApp />;
 }
