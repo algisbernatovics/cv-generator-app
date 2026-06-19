@@ -1,32 +1,21 @@
-# CV Generator App
+# CV Builder
 
-A Next.js and React CV builder that lets users enter personal information and work experience, then preview the result live.
+A mobile-first CV builder built with Next.js. Fill in your profile and work experience, preview live, and print or save as PDF from the browser.
 
 Live demo: [cv-generator-app-dun.vercel.app](https://cv-generator-app-dun.vercel.app)
 
-## Overview
-
-This project focuses on client-side form state, component composition, and live preview behavior. It is a good example of CRUD-like interactions without a backend.
-
-## Preview
-
-![CV Generator screenshot](./screenshot.png)
-
-The screenshot shows the split layout: form controls on one side and a live CV preview on the other.
-
 ## Features
 
-- Controlled React form state for personal details.
-- Add, edit, and delete work experience entries.
-- Live preview split between input cards and output cards.
-- Uses Ant Design components and a Tailwind-ready project setup.
+- Profile fields with auto-save to `localStorage`
+- Add, edit, and delete work experience entries
+- Mobile **Edit / Preview** tabs — one focused screen at a time on phone
+- Side-by-side editor and preview on desktop
+- Print / PDF via the browser print dialog
 
 ## Tech Stack
 
-- Next.js
-- React
-- TypeScript
-- Ant Design
+- Next.js 13 (App Router)
+- React + TypeScript
 - Tailwind CSS
 
 ## Run
@@ -36,14 +25,8 @@ npm install
 npm run dev
 ```
 
-## Project Structure
-
-- `src/components/CVGenerator.tsx` - main CV builder state and layout
-- `src/components/` - input and output cards
-- `src/app/` - Next.js app files
-- `screenshot.png` - project screenshot
+Open [http://localhost:3000](http://localhost:3000).
 
 ## License
 
 MIT License. See [LICENSE](./LICENSE).
-

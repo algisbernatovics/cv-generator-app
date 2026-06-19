@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
+
 export default function Error({
   reset,
 }: {
@@ -7,18 +9,12 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="cv-main flex min-h-[50vh] flex-col items-center justify-center gap-4 text-center">
-      <h1 className="text-2xl font-semibold">Something went wrong</h1>
-      <p className="max-w-md text-slate-600">
-        The CV Generator could not load this page. Your saved form data should still be in local storage.
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-canvas px-4 text-center">
+      <h1 className="text-2xl font-semibold text-ink">Something went wrong</h1>
+      <p className="max-w-md text-muted">
+        The CV builder could not load. Your saved data should still be in this browser.
       </p>
-      <button
-        type="button"
-        onClick={reset}
-        className="rounded-lg bg-[#337aff] px-4 py-2 text-white hover:opacity-90"
-      >
-        Try again
-      </button>
+      <Button onClick={reset}>Try again</Button>
     </div>
   );
 }
