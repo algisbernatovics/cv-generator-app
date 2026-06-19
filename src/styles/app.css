@@ -332,6 +332,18 @@
   border-color: var(--btn-danger-border);
 }
 
+.btn-export {
+  background: var(--btn-export-bg);
+  color: var(--btn-export-fg);
+  border-color: var(--btn-export-border);
+}
+
+.btn-export:hover:not(:disabled) {
+  background: var(--btn-export-bg-hover);
+  border-color: var(--btn-export-bg-hover);
+  color: var(--btn-export-fg);
+}
+
 .btn-small {
   min-height: var(--btn-height-sm);
   padding: 0 0.75rem;
@@ -414,111 +426,180 @@
   margin: 0;
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--color-text-subtle);
 }
 
-.resume-preview {
+/* Mobile tab visibility — desktop always shows editor */
+
+@media (max-width: 1023px) {
+  .is-mobile-hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-preview-shell {
+    display: none !important;
+  }
+}
+
+.mobile-preview-shell {
+  width: 100%;
+}
+
+/* CV document — classic resume layout */
+
+.cv-document {
   width: 100%;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-panel);
   background: var(--resume-bg);
   color: var(--resume-fg);
-  padding: 1.25rem;
+  padding: 1.5rem;
   box-shadow: var(--resume-shadow);
 }
 
-@media (min-width: 1024px) {
-  .app-main .resume-preview {
-    display: none;
-  }
-}
-
-.resume-preview-compact {
+.cv-document--compact {
+  padding: 1.15rem;
   font-size: var(--font-size-sm);
 }
 
-.resume-header h2 {
+.cv-document__header {
+  padding-bottom: 0.85rem;
+  border-bottom: 2px solid var(--resume-section-rule);
+  margin-bottom: 1rem;
+}
+
+.cv-document__name {
   margin: 0;
-  font-size: 1.55rem;
+  font-size: 1.65rem;
+  font-weight: 700;
   line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--resume-fg);
 }
 
-.resume-contact {
-  margin: 0.55rem 0 0;
-  font-size: var(--font-size-xs);
-  line-height: 1.5;
-  color: var(--resume-muted);
+.cv-document--compact .cv-document__name {
+  font-size: 1.35rem;
+}
+
+.cv-document__contact {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.85rem 0 0;
+}
+
+@media (min-width: 480px) {
+  .cv-document__contact {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem 1rem;
+  }
+}
+
+.cv-document__contact-item {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.cv-document__contact-item dt {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--resume-label);
+}
+
+.cv-document__contact-item dd {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--resume-fg);
   word-break: break-word;
 }
 
-.resume-preview section {
+.cv-document__section {
   margin-top: 1.1rem;
 }
 
-.resume-preview h3 {
-  margin: 0 0 0.45rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+.cv-document__section-title {
+  margin: 0 0 0.55rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--resume-section-rule);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--resume-heading);
 }
 
-.resume-preview section > p {
+.cv-document__paragraph,
+.cv-document__placeholder {
   margin: 0;
   line-height: 1.6;
-  white-space: pre-wrap;
   color: var(--resume-fg);
+  white-space: pre-wrap;
 }
 
-.resume-muted {
+.cv-document__placeholder {
   color: var(--resume-muted);
+  font-style: italic;
 }
 
-.resume-jobs {
+.cv-document__jobs {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
 }
 
-.resume-job-head {
+.cv-document__job-header {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
 
-@media (min-width: 640px) {
-  .resume-job-head {
+@media (min-width: 520px) {
+  .cv-document__job-header {
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-start;
     gap: 1rem;
   }
 }
 
-.resume-job-head strong {
-  display: block;
+.cv-document__job-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--resume-fg);
 }
 
-.resume-job-head span {
-  display: block;
-  margin-top: 0.1rem;
-  color: var(--resume-muted);
+.cv-document__job-company {
+  margin: 0.15rem 0 0;
   font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--resume-label);
 }
 
-.resume-job-head time {
+.cv-document__job-dates {
+  margin: 0;
   font-size: 0.78rem;
+  font-weight: 600;
   color: var(--resume-muted);
   white-space: nowrap;
 }
 
-.resume-jobs li > p {
-  margin: 0.45rem 0 0;
+.cv-document__job-body {
+  margin-top: 0.45rem;
+}
+
+.cv-document__job-line {
+  margin: 0.2rem 0 0;
+  padding-left: 0.15rem;
   line-height: 1.55;
-  white-space: pre-wrap;
   color: var(--resume-fg);
 }
 
@@ -538,7 +619,7 @@
 
 @media print {
   @page {
-    margin: 12mm;
+    margin: 14mm;
   }
 
   body {
@@ -549,7 +630,7 @@
   .print-hidden,
   .app-header,
   .mobile-nav,
-  .desktop-preview {
+  .app-main {
     display: none !important;
   }
 
@@ -559,17 +640,27 @@
     background: var(--primitive-white);
   }
 
-  .app-main {
-    max-width: none;
+  .desktop-preview {
+    display: block !important;
+    border: none;
+    background: var(--primitive-white);
     padding: 0;
+    max-height: none;
+    overflow: visible;
   }
 
-  .app-main .resume-preview {
+  .desktop-preview-head {
+    display: none !important;
+  }
+
+  #resume-print-target,
+  #resume-mobile-preview {
     display: block !important;
     border: none;
     border-radius: 0;
     box-shadow: none;
     padding: 0;
+    max-width: none;
     color: var(--color-text);
   }
 }

@@ -75,9 +75,16 @@
 
   --resume-bg: var(--color-surface);
   --resume-fg: var(--color-text);
-  --resume-heading: var(--color-accent);
+  --resume-heading: var(--color-text);
+  --resume-section-rule: var(--color-border-strong);
+  --resume-label: var(--color-text-muted);
   --resume-muted: var(--color-text-muted);
   --resume-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+  --btn-export-bg: var(--color-accent);
+  --btn-export-fg: var(--color-text-inverse);
+  --btn-export-border: var(--color-accent);
+  --btn-export-bg-hover: var(--color-accent-hover);
 
   --nav-tab-bg: var(--color-surface);
   --nav-tab-fg: var(--color-text);
