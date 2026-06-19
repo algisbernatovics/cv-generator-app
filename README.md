@@ -11,7 +11,7 @@ npm run dev
 
 Open **http://localhost:3000** on your phone (same Wi‑Fi) or desktop.
 
-> Production (Vercel) deploys from `main`. Merge the open PR to update the live site.
+> Production deploys from the `main` branch on Vercel (`cv-generator-app-dun.vercel.app`).
 
 ## Features
 
