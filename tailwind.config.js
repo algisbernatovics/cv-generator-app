@@ -8,17 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        canvas: "var(--canvas)",
-        paper: "var(--paper)",
-        ink: "var(--ink)",
-        muted: "var(--muted)",
-        line: "var(--line)",
-        accent: "var(--accent)",
-        danger: "var(--danger)",
+        bg: "var(--color-bg)",
+        surface: "var(--color-surface)",
+        "surface-muted": "var(--color-surface-muted)",
+        border: "var(--color-border)",
+        text: "var(--color-text)",
+        muted: "var(--color-text-muted)",
+        accent: "var(--color-accent)",
+        danger: "var(--color-danger)",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"],
       },
     },
   },
