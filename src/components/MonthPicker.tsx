@@ -33,12 +33,15 @@ export function MonthPicker({
         disabled={disabled}
         isClearable={!disabled}
         autoComplete="off"
-        withPortal
+        portalId="cv-datepicker-portal"
+        popperPlacement="bottom-start"
         showIcon
         toggleCalendarOnIconClick
+        closeOnScroll={false}
         className="month-picker__input"
         calendarClassName="month-picker__calendar"
         popperClassName="month-picker__popper"
+        wrapperClassName="month-picker__wrapper"
         showPopperArrow={false}
         shouldCloseOnSelect
       />
