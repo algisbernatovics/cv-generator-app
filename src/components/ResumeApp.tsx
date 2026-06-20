@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ResumeDocument } from "@/components/ResumeDocument";
+import { MonthPicker } from "@/components/MonthPicker";
 import {
   clearResumeStorage,
   emptyResume,
   formatEducationDates,
   formatJobDates,
-  formatMonthForInput,
   isValidMonthInput,
   loadResume,
   newEducationId,
@@ -96,8 +96,8 @@ export function ResumeApp() {
     setJobDraft({
       title: job.title,
       company: job.company,
-      start: formatMonthForInput(job.start),
-      end: formatMonthForInput(job.end),
+      start: job.start,
+      end: job.end,
       current: job.current,
       details: job.details,
     });
@@ -163,8 +163,8 @@ export function ResumeApp() {
     setEducationDraft({
       degree: entry.degree,
       school: entry.school,
-      start: formatMonthForInput(entry.start),
-      end: formatMonthForInput(entry.end),
+      start: entry.start,
+      end: entry.end,
       current: entry.current,
       details: entry.details,
     });
@@ -391,30 +391,24 @@ export function ResumeApp() {
               </label>
 
               <div className="field-row">
-                <label className="field">
+                <div className="field">
                   <span>Start</span>
-                  <input
-                    type="text"
-                    inputMode="text"
-                    autoComplete="off"
+                  <MonthPicker
                     value={jobDraft.start}
-                    onChange={(event) => setJobDraft((current) => ({ ...current, start: event.target.value }))}
-                    placeholder="Jan 2022 or 03/2024"
+                    onChange={(start) => setJobDraft((current) => ({ ...current, start }))}
+                    placeholder="Select start month"
                   />
-                </label>
+                </div>
 
-                <label className="field">
+                <div className="field">
                   <span>End</span>
-                  <input
-                    type="text"
-                    inputMode="text"
-                    autoComplete="off"
+                  <MonthPicker
                     value={jobDraft.end}
+                    onChange={(end) => setJobDraft((current) => ({ ...current, end }))}
                     disabled={jobDraft.current}
-                    onChange={(event) => setJobDraft((current) => ({ ...current, end: event.target.value }))}
-                    placeholder="Dec 2024 or 12/2024"
+                    placeholder="Select end month"
                   />
-                </label>
+                </div>
               </div>
 
               <label className="checkbox-row">
@@ -519,34 +513,24 @@ export function ResumeApp() {
               </label>
 
               <div className="field-row">
-                <label className="field">
+                <div className="field">
                   <span>Start</span>
-                  <input
-                    type="text"
-                    inputMode="text"
-                    autoComplete="off"
+                  <MonthPicker
                     value={educationDraft.start}
-                    onChange={(event) =>
-                      setEducationDraft((current) => ({ ...current, start: event.target.value }))
-                    }
-                    placeholder="Sep 2018 or 09/2018"
+                    onChange={(start) => setEducationDraft((current) => ({ ...current, start }))}
+                    placeholder="Select start month"
                   />
-                </label>
+                </div>
 
-                <label className="field">
+                <div className="field">
                   <span>End</span>
-                  <input
-                    type="text"
-                    inputMode="text"
-                    autoComplete="off"
+                  <MonthPicker
                     value={educationDraft.end}
+                    onChange={(end) => setEducationDraft((current) => ({ ...current, end }))}
                     disabled={educationDraft.current}
-                    onChange={(event) =>
-                      setEducationDraft((current) => ({ ...current, end: event.target.value }))
-                    }
-                    placeholder="Jun 2022 or 06/2022"
+                    placeholder="Select end month"
                   />
-                </label>
+                </div>
               </div>
 
               <label className="checkbox-row">

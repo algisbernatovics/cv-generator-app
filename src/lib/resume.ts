@@ -166,6 +166,26 @@ export function isValidMonthInput(value: string): boolean {
   return normalizeMonthValue(value) !== "";
 }
 
+export function parseMonthValue(value: string): Date | null {
+  const normalized = normalizeMonthValue(value);
+
+  if (!normalized) {
+    return null;
+  }
+
+  const [year, month] = normalized.split("-").map(Number);
+
+  if (!isValidMonthParts(year, month)) {
+    return null;
+  }
+
+  return new Date(year, month - 1, 1);
+}
+
+export function dateToMonthValue(date: Date): string {
+  return toMonthValue(date.getFullYear(), date.getMonth() + 1);
+}
+
 /** Friendly label for editing stored dates in a text field. */
 export function formatMonthForInput(value: string): string {
   const formatted = formatMonth(value);
