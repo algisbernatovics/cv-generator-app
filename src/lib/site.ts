@@ -25,6 +25,14 @@ export function getSiteUrl(): string {
     return fromEnv;
   }
 
+  if (process.env.VERCEL_ENV === "production") {
+    if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+      return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    }
+
+    return DEFAULT_SITE_URL;
+  }
+
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }

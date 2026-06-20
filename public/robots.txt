@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://cv-generator-app-dun.vercel.app/sitemap.xml
