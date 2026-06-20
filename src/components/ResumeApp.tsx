@@ -7,9 +7,12 @@ import {
   emptyResume,
   formatEducationDates,
   formatJobDates,
+  formatMonthForInput,
+  isValidMonthInput,
   loadResume,
   newEducationId,
   newJobId,
+  normalizeMonthValue,
   saveResume,
   type ResumeData,
   type ResumeEducation,
@@ -93,8 +96,8 @@ export function ResumeApp() {
     setJobDraft({
       title: job.title,
       company: job.company,
-      start: job.start,
-      end: job.end,
+      start: formatMonthForInput(job.start),
+      end: formatMonthForInput(job.end),
       current: job.current,
       details: job.details,
     });
@@ -110,7 +113,10 @@ export function ResumeApp() {
     const title = jobDraft.title.trim();
     const company = jobDraft.company.trim();
 
-    if (!title || !company || !jobDraft.start || (!jobDraft.current && !jobDraft.end)) {
+    const start = normalizeMonthValue(jobDraft.start);
+    const end = jobDraft.current ? "" : normalizeMonthValue(jobDraft.end);
+
+    if (!title || !company || !start || (!jobDraft.current && !end)) {
       return;
     }
 
@@ -120,8 +126,8 @@ export function ResumeApp() {
       id: editingJobId ?? newJobId(),
       title,
       company,
-      start: jobDraft.start,
-      end: jobDraft.current ? "" : jobDraft.end,
+      start,
+      end,
       current: jobDraft.current,
       details: jobDraft.details.trim(),
     };
@@ -157,8 +163,8 @@ export function ResumeApp() {
     setEducationDraft({
       degree: entry.degree,
       school: entry.school,
-      start: entry.start,
-      end: entry.end,
+      start: formatMonthForInput(entry.start),
+      end: formatMonthForInput(entry.end),
       current: entry.current,
       details: entry.details,
     });
@@ -174,7 +180,10 @@ export function ResumeApp() {
     const degree = educationDraft.degree.trim();
     const school = educationDraft.school.trim();
 
-    if (!degree || !school || !educationDraft.start || (!educationDraft.current && !educationDraft.end)) {
+    const start = normalizeMonthValue(educationDraft.start);
+    const end = educationDraft.current ? "" : normalizeMonthValue(educationDraft.end);
+
+    if (!degree || !school || !start || (!educationDraft.current && !end)) {
       return;
     }
 
@@ -184,8 +193,8 @@ export function ResumeApp() {
       id: editingEducationId ?? newEducationId(),
       degree,
       school,
-      start: educationDraft.start,
-      end: educationDraft.current ? "" : educationDraft.end,
+      start,
+      end,
       current: educationDraft.current,
       details: educationDraft.details.trim(),
     };
@@ -226,14 +235,14 @@ export function ResumeApp() {
   const canSaveJob =
     jobDraft.title.trim().length > 0 &&
     jobDraft.company.trim().length > 0 &&
-    jobDraft.start.length > 0 &&
-    (jobDraft.current || jobDraft.end.length > 0);
+    isValidMonthInput(jobDraft.start) &&
+    (jobDraft.current || isValidMonthInput(jobDraft.end));
 
   const canSaveEducation =
     educationDraft.degree.trim().length > 0 &&
     educationDraft.school.trim().length > 0 &&
-    educationDraft.start.length > 0 &&
-    (educationDraft.current || educationDraft.end.length > 0);
+    isValidMonthInput(educationDraft.start) &&
+    (educationDraft.current || isValidMonthInput(educationDraft.end));
 
   return (
     <div className="app-shell">
@@ -385,19 +394,25 @@ export function ResumeApp() {
                 <label className="field">
                   <span>Start</span>
                   <input
-                    type="month"
+                    type="text"
+                    inputMode="text"
+                    autoComplete="off"
                     value={jobDraft.start}
                     onChange={(event) => setJobDraft((current) => ({ ...current, start: event.target.value }))}
+                    placeholder="Jan 2022 or 03/2024"
                   />
                 </label>
 
                 <label className="field">
                   <span>End</span>
                   <input
-                    type="month"
+                    type="text"
+                    inputMode="text"
+                    autoComplete="off"
                     value={jobDraft.end}
                     disabled={jobDraft.current}
                     onChange={(event) => setJobDraft((current) => ({ ...current, end: event.target.value }))}
+                    placeholder="Dec 2024 or 12/2024"
                   />
                 </label>
               </div>
@@ -507,23 +522,29 @@ export function ResumeApp() {
                 <label className="field">
                   <span>Start</span>
                   <input
-                    type="month"
+                    type="text"
+                    inputMode="text"
+                    autoComplete="off"
                     value={educationDraft.start}
                     onChange={(event) =>
                       setEducationDraft((current) => ({ ...current, start: event.target.value }))
                     }
+                    placeholder="Sep 2018 or 09/2018"
                   />
                 </label>
 
                 <label className="field">
                   <span>End</span>
                   <input
-                    type="month"
+                    type="text"
+                    inputMode="text"
+                    autoComplete="off"
                     value={educationDraft.end}
                     disabled={educationDraft.current}
                     onChange={(event) =>
                       setEducationDraft((current) => ({ ...current, end: event.target.value }))
                     }
+                    placeholder="Jun 2022 or 06/2022"
                   />
                 </label>
               </div>

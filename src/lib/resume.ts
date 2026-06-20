@@ -68,11 +68,50 @@ export function newEducationId(): string {
 
 const STORAGE_KEY = "cv-resume-v3";
 
+const MONTH_NAMES: Record<string, number> = {
+  jan: 1,
+  january: 1,
+  feb: 2,
+  february: 2,
+  mar: 3,
+  march: 3,
+  apr: 4,
+  april: 4,
+  may: 5,
+  jun: 6,
+  june: 6,
+  jul: 7,
+  july: 7,
+  aug: 8,
+  august: 8,
+  sep: 9,
+  sept: 9,
+  september: 9,
+  oct: 10,
+  october: 10,
+  nov: 11,
+  november: 11,
+  dec: 12,
+  december: 12,
+};
+
 function isValidMonthParts(year: number, month: number): boolean {
   return Number.isInteger(year) && Number.isInteger(month) && month >= 1 && month <= 12 && year >= 1950 && year <= 2100;
 }
 
-/** Normalize stored dates to HTML month input format (YYYY-MM). */
+function toMonthValue(year: number, month: number): string {
+  if (!isValidMonthParts(year, month)) {
+    return "";
+  }
+
+  return `${year}-${String(month).padStart(2, "0")}`;
+}
+
+function expandYear(rawYear: number): number {
+  return rawYear < 100 ? 2000 + rawYear : rawYear;
+}
+
+/** Normalize manual date text to internal format (YYYY-MM). */
 export function normalizeMonthValue(value: string): string {
   const trimmed = value.trim();
 
@@ -80,38 +119,58 @@ export function normalizeMonthValue(value: string): string {
     return "";
   }
 
-  const isoMatch = trimmed.match(/^(\d{4})-(\d{2})$/);
+  const isoMatch = trimmed.match(/^(\d{4})-(\d{1,2})$/);
 
   if (isoMatch) {
-    const year = Number(isoMatch[1]);
-    const month = Number(isoMatch[2]);
-
-    return isValidMonthParts(year, month) ? `${isoMatch[1]}-${isoMatch[2]}` : "";
+    return toMonthValue(Number(isoMatch[1]), Number(isoMatch[2]));
   }
 
-  const dotted = trimmed.match(/^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$/);
+  const yearFirst = trimmed.match(/^(\d{4})[/.](\d{1,2})$/);
 
-  if (dotted) {
-    const month = Number(dotted[2]);
-    const rawYear = Number(dotted[3]);
-    const year = rawYear < 100 ? 2000 + rawYear : rawYear;
+  if (yearFirst) {
+    return toMonthValue(Number(yearFirst[1]), Number(yearFirst[2]));
+  }
 
-    if (isValidMonthParts(year, month)) {
-      return `${year}-${String(month).padStart(2, "0")}`;
+  const monthFirst = trimmed.match(/^(\d{1,2})[/.](\d{2,4})$/);
+
+  if (monthFirst) {
+    return toMonthValue(expandYear(Number(monthFirst[2])), Number(monthFirst[1]));
+  }
+
+  const dottedDayMonth = trimmed.match(/^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$/);
+
+  if (dottedDayMonth) {
+    return toMonthValue(expandYear(Number(dottedDayMonth[3])), Number(dottedDayMonth[2]));
+  }
+
+  const namedMonth = trimmed.match(/^([a-zA-Z]+)\s+(\d{4})$/);
+
+  if (namedMonth) {
+    const month = MONTH_NAMES[namedMonth[1].toLowerCase()];
+
+    if (month) {
+      return toMonthValue(Number(namedMonth[2]), month);
     }
   }
 
   const yearOnly = trimmed.match(/^(\d{4})$/);
 
   if (yearOnly) {
-    const year = Number(yearOnly[1]);
-
-    if (year >= 1950 && year <= 2100) {
-      return `${yearOnly[1]}-01`;
-    }
+    return toMonthValue(Number(yearOnly[1]), 1);
   }
 
   return "";
+}
+
+export function isValidMonthInput(value: string): boolean {
+  return normalizeMonthValue(value) !== "";
+}
+
+/** Friendly label for editing stored dates in a text field. */
+export function formatMonthForInput(value: string): string {
+  const formatted = formatMonth(value);
+
+  return formatted || value.trim();
 }
 
 export function loadResume(): ResumeData {
