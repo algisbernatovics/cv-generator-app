@@ -5,11 +5,14 @@ import { ResumeDocument } from "@/components/ResumeDocument";
 import {
   clearResumeStorage,
   emptyResume,
+  formatEducationDates,
   formatJobDates,
   loadResume,
+  newEducationId,
   newJobId,
   saveResume,
   type ResumeData,
+  type ResumeEducation,
   type ResumeJob,
   type ResumeProfile,
 } from "@/lib/resume";
@@ -25,11 +28,22 @@ const emptyJob = {
   details: "",
 };
 
+const emptyEducation = {
+  degree: "",
+  school: "",
+  start: "",
+  end: "",
+  current: false,
+  details: "",
+};
+
 export function ResumeApp() {
   const [data, setData] = useState<ResumeData>(emptyResume);
   const [tab, setTab] = useState<Tab>("edit");
   const [editingJobId, setEditingJobId] = useState<string | null>(null);
   const [jobDraft, setJobDraft] = useState(emptyJob);
+  const [editingEducationId, setEditingEducationId] = useState<string | null>(null);
+  const [educationDraft, setEducationDraft] = useState(emptyEducation);
   const touched = useRef(false);
   const ready = useRef(false);
 
@@ -65,9 +79,12 @@ export function ResumeApp() {
     setData({
       profile: { ...emptyResume.profile },
       jobs: [],
+      education: [],
     });
     setEditingJobId(null);
     setJobDraft({ ...emptyJob });
+    setEditingEducationId(null);
+    setEducationDraft({ ...emptyEducation });
     setTab("edit");
   }
 
@@ -135,6 +152,72 @@ export function ResumeApp() {
     }
   }
 
+  function startEditEducation(entry: ResumeEducation) {
+    setEditingEducationId(entry.id);
+    setEducationDraft({
+      degree: entry.degree,
+      school: entry.school,
+      start: entry.start,
+      end: entry.end,
+      current: entry.current,
+      details: entry.details,
+    });
+    setTab("edit");
+  }
+
+  function cancelEducationForm() {
+    setEditingEducationId(null);
+    setEducationDraft(emptyEducation);
+  }
+
+  function saveEducation() {
+    const degree = educationDraft.degree.trim();
+    const school = educationDraft.school.trim();
+
+    if (!degree || !school || !educationDraft.start || (!educationDraft.current && !educationDraft.end)) {
+      return;
+    }
+
+    touched.current = true;
+
+    const payload: ResumeEducation = {
+      id: editingEducationId ?? newEducationId(),
+      degree,
+      school,
+      start: educationDraft.start,
+      end: educationDraft.current ? "" : educationDraft.end,
+      current: educationDraft.current,
+      details: educationDraft.details.trim(),
+    };
+
+    setData((current) => {
+      if (editingEducationId) {
+        return {
+          ...current,
+          education: current.education.map((entry) =>
+            entry.id === editingEducationId ? payload : entry
+          ),
+        };
+      }
+
+      return { ...current, education: [payload, ...current.education] };
+    });
+
+    cancelEducationForm();
+  }
+
+  function deleteEducation(id: string) {
+    touched.current = true;
+    setData((current) => ({
+      ...current,
+      education: current.education.filter((entry) => entry.id !== id),
+    }));
+
+    if (editingEducationId === id) {
+      cancelEducationForm();
+    }
+  }
+
   function printResume() {
     window.print();
   }
@@ -145,6 +228,12 @@ export function ResumeApp() {
     jobDraft.company.trim().length > 0 &&
     jobDraft.start.length > 0 &&
     (jobDraft.current || jobDraft.end.length > 0);
+
+  const canSaveEducation =
+    educationDraft.degree.trim().length > 0 &&
+    educationDraft.school.trim().length > 0 &&
+    educationDraft.start.length > 0 &&
+    (educationDraft.current || educationDraft.end.length > 0);
 
   return (
     <div className="app-shell">
@@ -226,6 +315,16 @@ export function ResumeApp() {
                   value={profile.website}
                   onChange={(event) => updateProfile("website", event.target.value)}
                   placeholder="https://example.com"
+                />
+              </label>
+
+              <label className="field field-full">
+                <span>Skills</span>
+                <textarea
+                  rows={3}
+                  value={profile.skills}
+                  onChange={(event) => updateProfile("skills", event.target.value)}
+                  placeholder="JavaScript, React, SQL — one per line or comma-separated."
                 />
               </label>
             </div>
@@ -334,6 +433,139 @@ export function ResumeApp() {
                 </button>
                 {editingJobId ? (
                   <button type="button" className="btn btn-ghost" onClick={cancelJobForm}>
+                    Cancel
+                  </button>
+                ) : null}
+              </div>
+            </div>
+          </section>
+
+          <section className="panel">
+            <div className="panel-head">
+              <h2 className="panel-title">Education</h2>
+              <p className="panel-note">Degrees, bootcamps, or certifications.</p>
+            </div>
+
+            {data.education.length > 0 ? (
+              <ul className="job-list">
+                {data.education.map((entry) => (
+                  <li key={entry.id} className="job-item">
+                    <div>
+                      <p className="job-item-title">{entry.degree}</p>
+                      <p className="job-item-company">{entry.school}</p>
+                      <p className="job-item-dates">{formatEducationDates(entry)}</p>
+                    </div>
+                    <div className="job-item-actions">
+                      <button
+                        type="button"
+                        className="btn btn-small btn-secondary"
+                        onClick={() => startEditEducation(entry)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-small btn-danger"
+                        onClick={() => deleteEducation(entry.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="empty-note">No education entries yet. Add one below.</p>
+            )}
+
+            <div className="job-form">
+              <p className="job-form-label">{editingEducationId ? "Edit entry" : "Add entry"}</p>
+
+              <label className="field field-full">
+                <span>Degree or program</span>
+                <input
+                  value={educationDraft.degree}
+                  onChange={(event) =>
+                    setEducationDraft((current) => ({ ...current, degree: event.target.value }))
+                  }
+                  placeholder="B.Sc. Computer Science"
+                />
+              </label>
+
+              <label className="field field-full">
+                <span>School</span>
+                <input
+                  value={educationDraft.school}
+                  onChange={(event) =>
+                    setEducationDraft((current) => ({ ...current, school: event.target.value }))
+                  }
+                  placeholder="University of Example"
+                />
+              </label>
+
+              <div className="field-row">
+                <label className="field">
+                  <span>Start</span>
+                  <input
+                    type="month"
+                    value={educationDraft.start}
+                    onChange={(event) =>
+                      setEducationDraft((current) => ({ ...current, start: event.target.value }))
+                    }
+                  />
+                </label>
+
+                <label className="field">
+                  <span>End</span>
+                  <input
+                    type="month"
+                    value={educationDraft.end}
+                    disabled={educationDraft.current}
+                    onChange={(event) =>
+                      setEducationDraft((current) => ({ ...current, end: event.target.value }))
+                    }
+                  />
+                </label>
+              </div>
+
+              <label className="checkbox-row">
+                <input
+                  type="checkbox"
+                  checked={educationDraft.current}
+                  onChange={(event) =>
+                    setEducationDraft((current) => ({
+                      ...current,
+                      current: event.target.checked,
+                      end: event.target.checked ? "" : current.end,
+                    }))
+                  }
+                />
+                <span>I am still studying here</span>
+              </label>
+
+              <label className="field field-full">
+                <span>Details (optional)</span>
+                <textarea
+                  rows={3}
+                  value={educationDraft.details}
+                  onChange={(event) =>
+                    setEducationDraft((current) => ({ ...current, details: event.target.value }))
+                  }
+                  placeholder="Honors, relevant coursework, GPA. One bullet per line."
+                />
+              </label>
+
+              <div className="form-actions">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  disabled={!canSaveEducation}
+                  onClick={saveEducation}
+                >
+                  {editingEducationId ? "Save entry" : "Add entry"}
+                </button>
+                {editingEducationId ? (
+                  <button type="button" className="btn btn-ghost" onClick={cancelEducationForm}>
                     Cancel
                   </button>
                 ) : null}
