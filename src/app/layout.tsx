@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { SiteJsonLd } from "@/components/SiteJsonLd";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import {
   getSiteUrl,
   siteDescription,
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="light" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body className={spaceGrotesk.className}>
+        <GoogleAnalytics />
         <SiteJsonLd />
         {children}
         <div id="cv-datepicker-portal" />

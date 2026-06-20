@@ -18,6 +18,8 @@ export const siteKeywords = [
   "job application",
 ];
 
+export const gaMeasurementId = process.env.NEXT_PUBLIC_GA_ID ?? "G-1FETL3KTPN";
+
 export function getSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
 
