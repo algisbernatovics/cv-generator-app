@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ResumeDocument } from "@/components/ResumeDocument";
 import { MonthPicker } from "@/components/MonthPicker";
+import { exportResumePdf } from "@/lib/exportResumePdf";
 import {
   clearResumeStorage,
   emptyResume,
@@ -47,6 +48,7 @@ export function ResumeApp() {
   const [jobDraft, setJobDraft] = useState(emptyJob);
   const [editingEducationId, setEditingEducationId] = useState<string | null>(null);
   const [educationDraft, setEducationDraft] = useState(emptyEducation);
+  const [exporting, setExporting] = useState(false);
   const touched = useRef(false);
   const ready = useRef(false);
 
@@ -227,8 +229,20 @@ export function ResumeApp() {
     }
   }
 
-  function printResume() {
-    window.print();
+  async function downloadPdf() {
+    const element = document.getElementById("resume-export-target");
+
+    if (!element || exporting) {
+      return;
+    }
+
+    setExporting(true);
+
+    try {
+      await exportResumePdf(element, data.profile.name.trim() || "resume");
+    } finally {
+      setExporting(false);
+    }
   }
 
   const profile = data.profile;
@@ -603,20 +617,24 @@ export function ResumeApp() {
         >
           Preview
         </button>
-        <button type="button" className="mobile-nav-btn accent" onClick={printResume}>
-          PDF
+        <button type="button" className="mobile-nav-btn accent" disabled={exporting} onClick={downloadPdf}>
+          {exporting ? "…" : "PDF"}
         </button>
       </nav>
 
       <aside className="desktop-preview print-hidden" aria-label="Live preview">
         <div className="desktop-preview-head">
           <p>Live preview</p>
-          <button type="button" className="btn btn-small btn-export" onClick={printResume}>
-            Print / PDF
+          <button type="button" className="btn btn-small btn-export" disabled={exporting} onClick={downloadPdf}>
+            {exporting ? "Exporting…" : "Download PDF"}
           </button>
         </div>
         <ResumeDocument data={data} id="resume-print-target" className="cv-document--compact" />
       </aside>
+
+      <div className="resume-export-source" aria-hidden="true">
+        <ResumeDocument data={data} id="resume-export-target" className="cv-document--compact cv-document--export" />
+      </div>
     </div>
   );
 }

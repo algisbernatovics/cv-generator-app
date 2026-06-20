@@ -747,6 +747,22 @@
   font-size: 0.84rem;
 }
 
+.cv-document--export {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: auto;
+}
+
+.resume-export-source {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 210mm;
+  pointer-events: none;
+  overflow: visible;
+}
+
 .cv-document__header {
   text-align: left;
   padding-bottom: 0.85rem;
