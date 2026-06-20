@@ -31,14 +31,16 @@ export function MonthPicker({
         dateFormat="MMM yyyy"
         placeholderText={placeholder}
         disabled={disabled}
-        readOnly
         isClearable={!disabled}
         autoComplete="off"
+        withPortal
+        showIcon
+        toggleCalendarOnIconClick
         className="month-picker__input"
         calendarClassName="month-picker__calendar"
         popperClassName="month-picker__popper"
-        popperPlacement="bottom-start"
         showPopperArrow={false}
+        shouldCloseOnSelect
       />
     </div>
   );
