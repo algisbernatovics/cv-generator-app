@@ -390,7 +390,7 @@ export function ResumeApp() {
                 />
               </label>
 
-              <div className="field-row">
+              <div className="field-row field-row--dates">
                 <div className="field">
                   <span>Start</span>
                   <MonthPicker
@@ -512,7 +512,7 @@ export function ResumeApp() {
                 />
               </label>
 
-              <div className="field-row">
+              <div className="field-row field-row--dates">
                 <div className="field">
                   <span>Start</span>
                   <MonthPicker
