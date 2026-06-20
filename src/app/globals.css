@@ -54,7 +54,7 @@
 
 @layer components {
   button.btn {
-    font: inherit;
+    font-family: var(--font-sans);
     font-weight: 600;
     line-height: 1.2;
     appearance: none;

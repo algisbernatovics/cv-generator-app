@@ -52,9 +52,10 @@
 
 .app-kicker {
   margin: 0;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-accent);
 }
@@ -160,8 +161,11 @@
 }
 
 .field > span {
+  font-family: var(--font-mono);
   font-size: var(--font-size-label);
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--color-text-subtle);
 }
 
@@ -231,8 +235,9 @@
   padding: 0.65rem 2.75rem 0.65rem 0.8rem;
   background: var(--input-bg);
   color: var(--input-fg);
-  font-family: var(--font-sans);
-  font-size: var(--font-size-input);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
   line-height: 1.2;
   cursor: pointer;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -330,9 +335,11 @@
 
 .month-picker__year {
   flex: 1;
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
   line-height: 1.2;
+  letter-spacing: 0.06em;
   text-align: center;
   color: var(--color-text);
 }
@@ -395,9 +402,10 @@
   padding: 0.55rem 0.2rem;
   border: 1px solid transparent;
   border-radius: 0.55rem;
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   font-weight: 500;
+  letter-spacing: 0.02em;
   line-height: 1.2;
   color: var(--color-text-subtle);
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
@@ -729,6 +737,7 @@
   color: var(--resume-fg);
   padding: 1.75rem 1.85rem;
   box-shadow: var(--resume-shadow);
+  font-family: var(--font-sans);
   font-size: 0.92rem;
   line-height: 1.5;
 }
@@ -747,10 +756,11 @@
 
 .cv-document__name {
   margin: 0;
+  font-family: var(--font-sans);
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--resume-fg);
   text-transform: none;
 }
@@ -767,8 +777,10 @@
 
 .cv-document__contact {
   margin: 0.3rem 0 0;
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   line-height: 1.55;
+  letter-spacing: 0.01em;
   color: var(--resume-muted);
 }
 
@@ -780,9 +792,10 @@
   margin: 0 0 0.55rem;
   padding-bottom: 0.25rem;
   border-bottom: 1px solid var(--resume-section-rule);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--resume-fg);
 }
@@ -844,8 +857,10 @@
 .cv-document__job-dates {
   margin: 0;
   flex-shrink: 0;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   color: var(--resume-muted);
   white-space: nowrap;
 }
