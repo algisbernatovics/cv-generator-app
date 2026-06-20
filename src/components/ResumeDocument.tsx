@@ -6,84 +6,65 @@ interface ResumeDocumentProps {
   className?: string;
 }
 
-const contactFields = [
-  { key: "email", label: "Email" },
-  { key: "phone", label: "Phone" },
-  { key: "location", label: "Location" },
-  { key: "website", label: "Website" },
-] as const;
-
 export function ResumeDocument({ data, id, className = "" }: ResumeDocumentProps) {
   const { profile, jobs } = data;
-  const displayName = profile.name.trim() || "Your Name";
-  const displaySummary =
-    profile.summary.trim() ||
-    "Add a short professional summary in the editor to describe your background and goals.";
+  const name = profile.name.trim() || "Your Name";
+  const summary = profile.summary.trim();
 
-  const contactRows = contactFields
-    .map(({ key, label }) => ({
-      label,
-      value: profile[key].trim(),
-    }))
-    .filter((row) => row.value.length > 0);
+  const contactLine = [profile.email, profile.phone, profile.location, profile.website]
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .join("  ·  ");
 
   return (
     <article id={id} className={`cv-document ${className}`.trim()}>
       <header className="cv-document__header">
-        <h1 className="cv-document__name">{displayName}</h1>
-
-        {contactRows.length > 0 ? (
-          <dl className="cv-document__contact">
-            {contactRows.map((row) => (
-              <div key={row.label} className="cv-document__contact-item">
-                <dt>{row.label}</dt>
-                <dd>{row.value}</dd>
-              </div>
-            ))}
-          </dl>
+        <h1 className="cv-document__name">{name}</h1>
+        {contactLine ? (
+          <p className="cv-document__contact">{contactLine}</p>
         ) : (
-          <p className="cv-document__placeholder">Contact details will appear here.</p>
+          <p className="cv-document__hint">Add email, phone, or location in the editor.</p>
         )}
       </header>
 
       <section className="cv-document__section">
-        <h2 className="cv-document__section-title">Professional Summary</h2>
-        <p className="cv-document__paragraph">{displaySummary}</p>
+        <h2 className="cv-document__section-title">Summary</h2>
+        {summary ? (
+          <p className="cv-document__text">{summary}</p>
+        ) : (
+          <p className="cv-document__hint">Your professional summary will appear here.</p>
+        )}
       </section>
 
       <section className="cv-document__section">
-        <h2 className="cv-document__section-title">Professional Experience</h2>
+        <h2 className="cv-document__section-title">Experience</h2>
 
         {jobs.length === 0 ? (
-          <p className="cv-document__placeholder">Work experience entries will appear here.</p>
+          <p className="cv-document__hint">Add work experience in the editor.</p>
         ) : (
           <ul className="cv-document__jobs">
             {jobs.map((job) => (
               <li key={job.id} className="cv-document__job">
-                <div className="cv-document__job-header">
-                  <div className="cv-document__job-meta">
-                    <h3 className="cv-document__job-title">{job.title}</h3>
+                <div className="cv-document__job-row">
+                  <div>
+                    <p className="cv-document__job-title">{job.title}</p>
                     <p className="cv-document__job-company">{job.company}</p>
                   </div>
                   <p className="cv-document__job-dates">{formatJobDates(job)}</p>
                 </div>
 
                 {job.details ? (
-                  <div className="cv-document__job-body">
-                    {job.details.split("\n").map((line, index) => {
-                      const trimmed = line.trim();
-
-                      if (!trimmed) {
-                        return null;
-                      }
-
-                      return (
-                        <p key={`${job.id}-${index}`} className="cv-document__job-line">
-                          {trimmed.startsWith("•") ? trimmed : `• ${trimmed}`}
-                        </p>
-                      );
-                    })}
-                  </div>
+                  <ul className="cv-document__bullets">
+                    {job.details
+                      .split("\n")
+                      .map((line) => line.trim())
+                      .filter(Boolean)
+                      .map((line, index) => (
+                        <li key={`${job.id}-${index}`}>
+                          {line.replace(/^[•\-–]\s*/, "")}
+                        </li>
+                      ))}
+                  </ul>
                 ) : null}
               </li>
             ))}

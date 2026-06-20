@@ -37,20 +37,28 @@
   }
 
   input,
-  textarea,
-  button {
-    font: inherit;
-  }
-
-  input,
   textarea {
+    font: inherit;
     font-size: var(--font-size-input);
+    color: var(--input-fg);
+    background: var(--input-bg);
   }
 
   input,
   textarea,
-  select,
-  button {
+  select {
     color-scheme: light;
+  }
+}
+
+@layer components {
+  /* Tailwind preflight resets button backgrounds — re-apply token styles explicitly */
+  button.btn {
+    font: inherit;
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    line-height: 1.2;
+    appearance: none;
+    -webkit-appearance: none;
   }
 }

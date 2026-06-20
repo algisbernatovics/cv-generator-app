@@ -48,19 +48,30 @@
   --btn-height: 2.75rem;
   --btn-height-sm: 2.35rem;
   --btn-radius: 0.75rem;
-  --btn-primary-bg: var(--color-accent);
-  --btn-primary-fg: var(--color-text-inverse);
-  --btn-primary-bg-hover: var(--color-accent-hover);
+  --btn-primary-bg: var(--primitive-blue-700);
+  --btn-primary-fg: var(--primitive-white);
+  --btn-primary-bg-hover: var(--primitive-blue-600);
+  --btn-primary-bg-disabled: var(--primitive-slate-300);
+  --btn-primary-fg-disabled: var(--primitive-slate-700);
   --btn-secondary-bg: var(--color-surface);
-  --btn-secondary-fg: var(--color-text);
-  --btn-secondary-border: var(--color-border);
+  --btn-secondary-fg: var(--primitive-slate-900);
+  --btn-secondary-border: var(--primitive-slate-300);
   --btn-ghost-bg: var(--color-surface);
-  --btn-ghost-fg: var(--color-text-subtle);
-  --btn-ghost-border: var(--color-border);
+  --btn-ghost-fg: var(--primitive-slate-700);
+  --btn-ghost-border: var(--primitive-slate-300);
   --btn-danger-bg: var(--color-surface);
-  --btn-danger-fg: var(--color-danger);
-  --btn-danger-border: var(--color-danger-border);
-  --btn-disabled-opacity: 0.5;
+  --btn-danger-fg: var(--primitive-red-600);
+  --btn-danger-border: var(--primitive-red-100);
+  --btn-disabled-opacity: 1;
+
+  --btn-export-bg: var(--primitive-slate-900);
+  --btn-export-fg: var(--primitive-white);
+  --btn-export-border: var(--primitive-slate-900);
+  --btn-export-bg-hover: var(--primitive-slate-700);
+
+  --btn-reset-bg: var(--color-surface);
+  --btn-reset-fg: var(--primitive-slate-900);
+  --btn-reset-border: var(--primitive-slate-300);
 
   --input-bg: var(--color-surface);
   --input-fg: var(--color-text);
@@ -81,10 +92,10 @@
   --resume-muted: var(--color-text-muted);
   --resume-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 
-  --btn-export-bg: var(--color-accent);
-  --btn-export-fg: var(--color-text-inverse);
-  --btn-export-border: var(--color-accent);
-  --btn-export-bg-hover: var(--color-accent-hover);
+  --btn-export-bg: var(--primitive-slate-900);
+  --btn-export-fg: var(--primitive-white);
+  --btn-export-border: var(--primitive-slate-900);
+  --btn-export-bg-hover: var(--primitive-slate-700);
 
   --nav-tab-bg: var(--color-surface);
   --nav-tab-fg: var(--color-text);

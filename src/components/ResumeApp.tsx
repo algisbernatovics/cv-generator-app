@@ -25,10 +25,6 @@ const emptyJob = {
   details: "",
 };
 
-function isMobileLayout(): boolean {
-  return typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches;
-}
-
 export function ResumeApp() {
   const [data, setData] = useState<ResumeData>(emptyResume);
   const [tab, setTab] = useState<Tab>("edit");
@@ -64,15 +60,14 @@ export function ResumeApp() {
   }
 
   function resetAll() {
-    if (!window.confirm("Clear everything and start over?")) {
-      return;
-    }
-
-    touched.current = false;
-    setData(emptyResume);
-    setEditingJobId(null);
-    setJobDraft(emptyJob);
     clearResumeStorage();
+    touched.current = true;
+    setData({
+      profile: { ...emptyResume.profile },
+      jobs: [],
+    });
+    setEditingJobId(null);
+    setJobDraft({ ...emptyJob });
     setTab("edit");
   }
 
@@ -141,26 +136,7 @@ export function ResumeApp() {
   }
 
   function printResume() {
-    const mobile = isMobileLayout();
-    const previousTab = tab;
-
-    if (mobile) {
-      setTab("preview");
-    }
-
-    window.setTimeout(() => {
-      window.print();
-    }, 150);
-
-    window.addEventListener(
-      "afterprint",
-      () => {
-        if (mobile) {
-          setTab(previousTab);
-        }
-      },
-      { once: true }
-    );
+    window.print();
   }
 
   const profile = data.profile;
@@ -178,7 +154,7 @@ export function ResumeApp() {
             <p className="app-kicker">Resume builder</p>
             <h1 className="app-title">Build your CV</h1>
           </div>
-          <button type="button" className="btn btn-ghost u-hidden u-sm-inline-flex" onClick={resetAll}>
+          <button type="button" className="btn btn-reset btn-small" onClick={resetAll}>
             Reset
           </button>
         </div>
