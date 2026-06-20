@@ -92,11 +92,6 @@
   --resume-muted: var(--color-text-muted);
   --resume-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 
-  --btn-export-bg: var(--primitive-slate-900);
-  --btn-export-fg: var(--primitive-white);
-  --btn-export-border: var(--primitive-slate-900);
-  --btn-export-bg-hover: var(--primitive-slate-700);
-
   --nav-tab-bg: var(--color-surface);
   --nav-tab-fg: var(--color-text);
   --nav-tab-border: var(--color-border);

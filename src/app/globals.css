@@ -1,8 +1,9 @@
+@import "../styles/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "../styles/tokens.css";
 @import "../styles/app.css";
 
 @layer base {
@@ -52,13 +53,55 @@
 }
 
 @layer components {
-  /* Tailwind preflight resets button backgrounds — re-apply token styles explicitly */
   button.btn {
     font: inherit;
-    font-size: var(--font-size-body);
     font-weight: 600;
     line-height: 1.2;
     appearance: none;
     -webkit-appearance: none;
+    cursor: pointer;
+  }
+
+  button.btn.btn-export {
+    background-color: var(--btn-export-bg);
+    color: var(--btn-export-fg);
+    border: 1px solid var(--btn-export-border);
+  }
+
+  button.btn.btn-export:hover:not(:disabled) {
+    background-color: var(--btn-export-bg-hover);
+    border-color: var(--btn-export-bg-hover);
+    color: var(--btn-export-fg);
+  }
+
+  button.btn.btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+    border: 1px solid var(--btn-primary-bg);
+  }
+
+  button.btn.btn-primary:disabled {
+    background-color: var(--btn-primary-bg-disabled);
+    border-color: var(--btn-primary-bg-disabled);
+    color: var(--btn-primary-fg-disabled);
+  }
+
+  button.btn.btn-secondary,
+  button.btn.btn-reset {
+    background-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-fg);
+    border: 1px solid var(--btn-secondary-border);
+  }
+
+  button.btn.btn-danger {
+    background-color: var(--btn-danger-bg);
+    color: var(--btn-danger-fg);
+    border: 1px solid var(--btn-danger-border);
+  }
+
+  button.btn.mobile-nav-btn.accent {
+    background-color: var(--nav-tab-accent-bg);
+    color: var(--nav-tab-accent-fg);
+    border: 1px solid var(--nav-tab-accent-bg);
   }
 }

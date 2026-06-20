@@ -10,7 +10,7 @@
 @media (min-width: 1024px) {
   .app-shell {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: auto 1fr;
     gap: 0;
     padding-bottom: 0;
@@ -41,6 +41,13 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 0.85rem var(--space-page);
+}
+
+@media (min-width: 1024px) {
+  .app-header-inner {
+    max-width: none;
+    padding-inline: 1.5rem;
+  }
 }
 
 .app-kicker {
@@ -468,7 +475,7 @@
 
 .cv-document {
   width: 100%;
-  max-width: 42rem;
+  max-width: none;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-panel);
   background: var(--resume-bg);
